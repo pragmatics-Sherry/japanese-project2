@@ -560,9 +560,9 @@
     <!-- ══════════ 대화문 탭 ══════════ -->
     <div class="tab-panel" id="tab-dialogue">
       <div class="lesson-selector">
-        <button class="lesson-btn active" onclick="switchLesson(15)">第15課</button>
-        <button class="lesson-btn" onclick="switchLesson(16)">第16課</button>
-        <button class="lesson-btn" onclick="switchLesson(17)">第17課</button>
+        <button class="lesson-btn active" onclick="switchLesson(15, this)">第15課</button>
+        <button class="lesson-btn" onclick="switchLesson(16, this)">第16課</button>
+        <button class="lesson-btn" onclick="switchLesson(17, this)">第17課</button>
       </div>
 
       <!-- ══ 第15課 ══ -->
@@ -1128,6 +1128,90 @@ function showResult(){
 }
 
 function goMenu(){ showScreen('screen-start'); }
+
+// ═══════════ 대화문 탭 ═══════════
+const LESSONS = [15,16,17];
+const LESSON_TOTALS = { 15:13, 16:7, 17:7 };
+const dqState = {}; LESSONS.forEach(l=>dqState[l]={score:0,answered:0});
+
+function switchLesson(num, btn){
+  document.querySelectorAll('.lesson-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById(`lesson-${num}`).classList.add('active');
+  LESSONS.forEach(n=>{
+    const a=document.getElementById(`audio-${n}`);
+    if(a&&!a.paused){ a.pause(); document.getElementById(`play-btn-${n}`).textContent='▶'; }
+  });
+}
+
+// 오디오
+function fmt(s){ const m=Math.floor(s/60),x=Math.floor(s%60); return `${m}:${x.toString().padStart(2,'0')}`; }
+function toggleAudio(n){
+  const a=document.getElementById(`audio-${n}`), b=document.getElementById(`play-btn-${n}`);
+  if(a.paused){ a.play().catch(()=>{document.getElementById(`audio-time-${n}`).textContent='재생 오류';}); b.textContent='⏸'; }
+  else { a.pause(); b.textContent='▶'; }
+}
+function seekAudio(e,n){
+  const a=document.getElementById(`audio-${n}`); if(!a.duration) return;
+  const r=e.currentTarget.getBoundingClientRect();
+  a.currentTime=((e.clientX-r.left)/r.width)*a.duration;
+}
+LESSONS.forEach(n=>{
+  const a=document.getElementById(`audio-${n}`); if(!a) return;
+  a.addEventListener('timeupdate',()=>{
+    if(a.duration){
+      document.getElementById(`audio-bar-${n}`).style.width=`${(a.currentTime/a.duration)*100}%`;
+      document.getElementById(`audio-time-${n}`).textContent=`${fmt(a.currentTime)} / ${fmt(a.duration)}`;
+    }
+  });
+  a.addEventListener('ended',()=>{ document.getElementById(`play-btn-${n}`).textContent='▶'; });
+});
+
+// 빈칸 채우기
+function fillBlank(btn,blankId,correct,fbId,cardId,lesson){
+  const blank=document.getElementById(blankId), fb=document.getElementById(fbId), card=document.getElementById(cardId);
+  if(blank.classList.contains('filled-correct')||blank.classList.contains('filled-wrong')) return;
+  const chosen=btn.textContent.trim();
+  card.querySelectorAll('.dq-opt').forEach(b=>b.disabled=true);
+  if(chosen===correct){
+    blank.textContent=chosen; blank.classList.add('filled-correct');
+    fb.textContent='✓ 정답!'; fb.className='dq-fb show ok';
+    dqState[lesson].score++; playCorrect();
+  } else {
+    blank.textContent=chosen; blank.classList.add('filled-wrong');
+    fb.textContent=`✗ 오답 — 정답: ${correct}`; fb.className='dq-fb show no';
+    card.querySelectorAll('.dq-opt').forEach(b=>{ if(b.textContent.trim()===correct) b.classList.add('correct-opt'); });
+    playWrong();
+  }
+  dqState[lesson].answered++;
+  if(dqState[lesson].answered===LESSON_TOTALS[lesson]) setTimeout(()=>showLessonResult(lesson),700);
+}
+
+function showLessonResult(lesson){
+  const total=LESSON_TOTALS[lesson], sc=dqState[lesson].score, pct=sc/total;
+  let title,msg;
+  if(pct===1){title='かんぺき！';msg='만점! 대화문을 완벽히 익혔어요 🎉';}
+  else if(pct>=0.7){title='すごい！';msg='잘 했어요! 조금만 더 연습해요.';}
+  else{title='がんばって！';msg='다시 한번 도전해봐요!';}
+  document.getElementById(`dq-result-title-${lesson}`).textContent=title;
+  document.getElementById(`dq-result-score-${lesson}`).textContent=`${sc} / ${total} 정답`;
+  document.getElementById(`dq-result-msg-${lesson}`).textContent=msg;
+  const r=document.getElementById(`dq-result-${lesson}`);
+  r.classList.add('show'); r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetLesson(lesson){
+  dqState[lesson]={score:0,answered:0};
+  document.getElementById(`dq-result-${lesson}`).classList.remove('show');
+  for(let i=1;i<=LESSON_TOTALS[lesson];i++){
+    const blank=document.getElementById(`b${lesson}-${i}`); if(!blank) continue;
+    blank.textContent='고르세요'; blank.className='dq-blank';
+    const fb=document.getElementById(`fb${lesson}-${i}`); if(fb){ fb.className='dq-fb'; fb.textContent=''; }
+    const card=document.getElementById(`dq${lesson}-${i}`);
+    if(card) card.querySelectorAll('.dq-opt').forEach(b=>{ b.disabled=false; b.classList.remove('correct-opt'); });
+  }
+}
 </script>
 </body>
 </html>
