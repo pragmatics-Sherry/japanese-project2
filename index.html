@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使命者班クラスルーム</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Zen+Kurenaido&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --desk: #E4E1D6;        /* 책상 바탕 */
+    --paper: #FFFFFF;        /* 종이 */
+    --rule: #C9DCEC;         /* 가로줄 */
+    --margin-line: #F2A7B3;  /* 빨간 마진선 */
+    --ink: #33404A;          /* 글씨 (연필 남색) */
+    --ink-soft: #7A8691;     /* 연한 글씨 */
+    --ring: #9AA2A8;         /* 스프링 금속 */
+    --ring-dark: #6E767C;
+    --mint: #6FC8B6;         /* 포인트 민트 */
+    --mint-dark: #3EA994;
+    --yellow: #FFD45E;       /* 포스트잇 노랑 */
+    --coral: #FF9478;        /* 산호 */
+    --sky: #7FB2E8;          /* 하늘 */
+    --correct: #46A96A;
+    --correct-bg: #DCF2E3;
+    --wrong: #E8607A;
+    --wrong-bg: #FBDEE4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--desk);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(0,0,0,0.03) 0, transparent 40%);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    padding: 18px 12px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ─── 노트 전체 ─── */
+  .notebook {
+    width: 100%;
+    max-width: 540px;
+    background: var(--paper);
+    border-radius: 4px 4px 10px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.1);
+    position: relative;
+    padding-top: 34px;
+    overflow: hidden;
+  }
+
+  /* 스프링 바인딩 (상단) */
+  .spiral {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 34px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 0 14px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
+    z-index: 20;
+  }
+  .ring {
+    width: 20px; height: 26px;
+    margin-top: -7px;
+    border: 3.5px solid var(--ring);
+    border-top-color: var(--ring-dark);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fff 0%, #d7dadd 45%, var(--ring) 100%);
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.15);
+  }
+
+  /* ─── 헤더 ─── */
+  .header {
+    text-align: center;
+    padding: 6px 20px 14px;
+    position: relative;
+  }
+  .header-title {
+    font-family: 'Zen Kurenaido', sans-serif;
+    font-size: 2rem;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+  }
+  .header-sub {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.05rem;
+    color: var(--mint-dark);
+    margin-top: 2px;
+    font-weight: 700;
+  }
+  /* 마스킹 테이프 장식 */
+  .tape {
+    position: absolute;
+    width: 76px; height: 26px;
+    background: rgba(255, 212, 94, 0.55);
+    border-left: 1px dashed rgba(0,0,0,0.1);
+    border-right: 1px dashed rgba(0,0,0,0.1);
+    top: -2px;
+  }
+  .tape.left { left: 24px; transform: rotate(-7deg); }
+  .tape.right { right: 24px; transform: rotate(5deg); background: rgba(127,178,232,0.5); }
+
+  /* ─── 탭 네비게이션 (인덱스 탭 느낌) ─── */
+  .tab-nav {
+    display: flex;
+    gap: 6px;
+    padding: 0 16px;
+    margin-bottom: -2px;
+    position: relative;
+    z-index: 5;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 6px 12px;
+    background: #EDEAE2;
+    border: 2px solid #D8D3C6;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    font-family: 'Gaegu', cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { background: #F6F3EC; }
+  .tab-btn.active {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--mint);
+    border-bottom: 2px solid var(--paper);
+    box-shadow: 0 -3px 8px rgba(111,200,182,0.2);
+  }
+  .tab-btn .tab-emoji { font-size: 1.1rem; margin-right: 3px; }
+
+  /* ─── 종이 본문 (가로줄 + 마진선) ─── */
+  .page {
+    position: relative;
+    padding: 24px 22px 30px 30px;
+    background-image:
+      repeating-linear-gradient(
+        var(--paper),
+        var(--paper) 37px,
+        var(--rule) 38px
+      );
+    border-top: 2px solid var(--mint);
+    min-height: 400px;
+  }
+  /* 왼쪽 빨간 마진선 */
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 20px;
+    width: 2px;
+    background: var(--margin-line);
+    opacity: 0.6;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ─── 섹션 제목 ─── */
+  .sheet-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .sheet-title small { display:block; font-size: 0.8rem; color: var(--ink-soft); font-family:'Noto Sans KR'; font-weight:400; margin-top:2px; }
+
+  /* ─── 모드 선택 카드 ─── */
+  .mode-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+  .mode-card {
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.14s;
+    box-shadow: 3px 3px 0 rgba(51,64,74,0.15);
+  }
+  .mode-card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 rgba(51,64,74,0.18); }
+  .mode-card.selected { border-color: var(--mint-dark); background: var(--correct-bg); box-shadow: 3px 3px 0 var(--mint); }
+  .mode-emoji {
+    font-size: 1.6rem;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-family: 'Zen Kurenaido';
+  }
+  .mode-card.selected .mode-emoji { background: var(--mint); }
+  .mode-text { flex: 1; }
+  .mode-name { font-family:'Gaegu',cursive; font-size: 1.15rem; font-weight: 700; color: var(--ink); }
+  .mode-desc { font-size: 0.78rem; color: var(--ink-soft); margin-top: 1px; }
+
+  /* ─── 문제 수 ─── */
+  .count-row { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom: 24px; }
+  .count-label { font-family:'Gaegu',cursive; font-size:1.05rem; font-weight:700; color:var(--ink-soft); }
+  .count-btn {
+    width: 38px; height:38px; border-radius:50%;
+    border: 2.5px solid var(--ink);
+    background: var(--paper); color: var(--ink);
+    font-size: 1.3rem; font-weight:700; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 2px 2px 0 rgba(51,64,74,0.15);
+  }
+  .count-btn:hover { background: var(--yellow); }
+  .count-display { font-family:'Zen Kurenaido'; font-size:1.8rem; font-weight:700; min-width:40px; text-align:center; color:var(--ink); }
+
+  /* ─── 버튼 공통 ─── */
+  .btn-primary {
+    width: 100%; padding: 15px;
+    background: var(--mint);
+    border: 2.5px solid var(--ink);
+    border-radius: 14px;
+    font-family:'Gaegu',cursive; font-size: 1.2rem; font-weight:700;
+    color: #fff; cursor:pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: all 0.12s;
+  }
+  .btn-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn-primary:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn-dark {
+    width:100%; padding:13px; background: var(--ink); color:#fff;
+    border:2.5px solid var(--ink); border-radius: 12px;
+    font-family:'Gaegu',cursive; font-size:1.05rem; font-weight:700; cursor:pointer;
+    box-shadow: 3px 3px 0 var(--ink-soft); transition: all 0.1s;
+    display:none;
+  }
+  .btn-dark.show { display:block; }
+  .btn-dark:hover { background:#434f58; }
+  .btn-ghost {
+    width:100%; padding:12px; background: var(--paper); color:var(--ink);
+    border:2.5px solid var(--ink); border-radius: 12px;
+    font-family:'Gaegu',cursive; font-size:1rem; font-weight:700; cursor:pointer;
+    box-shadow: 3px 3px 0 rgba(51,64,74,0.15); transition: all 0.1s;
+  }
+  .btn-ghost:hover { background: var(--yellow); }
+
+  /* ─── 진행 바 ─── */
+  .progress-wrap { margin-bottom: 18px; }
+  .progress-info { display:flex; justify-content:space-between; font-family:'Gaegu',cursive; font-weight:700; font-size:0.95rem; color:var(--ink-soft); margin-bottom:5px; }
+  .progress-track { height: 10px; background:#EDEAE2; border:2px solid var(--ink); border-radius: 20px; overflow:hidden; }
+  .progress-fill { height:100%; background: var(--mint); transition: width .4s ease; }
+
+  /* ─── 문제 카드 ─── */
+  .q-card {
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+    border-radius: 16px;
+    padding: 26px 20px 22px;
+    text-align:center;
+    margin-bottom: 18px;
+    box-shadow: 4px 4px 0 rgba(51,64,74,0.15);
+    position: relative;
+  }
+  .q-tag {
+    position:absolute; top:-13px; left:50%; transform:translateX(-50%) rotate(-2deg);
+    background: var(--coral); color:#fff;
+    font-family:'Gaegu',cursive; font-weight:700; font-size:0.85rem;
+    padding: 2px 16px; border-radius: 20px; border:2px solid var(--ink);
+    white-space: nowrap;
+  }
+  .q-label { font-size:0.8rem; color:var(--ink-soft); margin-bottom:10px; margin-top:4px; }
+  .q-main { font-family:'Zen Kurenaido'; font-size: 4.5rem; line-height:1; color:var(--ink); }
+
+  /* ─── 선지 ─── */
+  .options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .opt {
+    padding: 16px 10px;
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+    border-radius: 12px;
+    font-family:'Zen Kurenaido'; font-size: 1.5rem;
+    color: var(--ink); cursor:pointer;
+    box-shadow: 3px 3px 0 rgba(51,64,74,0.15);
+    transition: all 0.12s;
+  }
+  .opt:hover:not(:disabled) { background: var(--yellow); transform: translate(-1px,-1px); }
+  .opt:disabled { cursor:default; }
+  .opt.correct { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); box-shadow: 3px 3px 0 var(--correct); }
+  .opt.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); box-shadow: 3px 3px 0 var(--wrong); }
+
+  /* ─── 피드백 ─── */
+  .feedback {
+    display:none; text-align:center; padding: 11px;
+    border-radius: 12px; font-family:'Gaegu',cursive; font-weight:700; font-size:1.05rem;
+    margin-bottom: 14px; border: 2.5px solid;
+  }
+  .feedback.show { display:block; }
+  .feedback.ok { background: var(--correct-bg); color: var(--correct); border-color: var(--correct); }
+  .feedback.no { background: var(--wrong-bg); color: var(--wrong); border-color: var(--wrong); }
+
+  /* ─── 결과 ─── */
+  .result-card {
+    background: var(--paper); border:2.5px solid var(--ink); border-radius:16px;
+    padding: 30px 22px; text-align:center; box-shadow: 4px 4px 0 rgba(51,64,74,0.15);
+    margin-bottom: 16px;
+  }
+  .result-face { font-family:'Zen Kurenaido'; font-size: 2.6rem; color: var(--mint-dark); margin-bottom:8px; }
+  .result-label { font-family:'Gaegu',cursive; font-weight:700; color:var(--ink-soft); font-size:0.95rem; }
+  .result-score { font-family:'Zen Kurenaido'; font-size:2.6rem; font-weight:700; color:var(--ink); margin:2px 0 6px; }
+  .result-msg { font-size:0.9rem; color:var(--ink-soft); margin-bottom:18px; }
+  .result-stats { display:flex; justify-content:center; gap:26px; padding-top:16px; border-top:2px dashed var(--rule); }
+  .stat-num { font-family:'Zen Kurenaido'; font-size:1.7rem; font-weight:700; }
+  .stat-num.c { color:var(--correct); }
+  .stat-num.w { color:var(--wrong); }
+  .stat-lbl { font-family:'Gaegu',cursive; font-size:0.8rem; color:var(--ink-soft); }
+  .wrong-box { margin-bottom:16px; }
+  .wrong-box-title { font-family:'Gaegu',cursive; font-weight:700; color:var(--ink-soft); font-size:0.9rem; margin-bottom:8px; }
+  .wrong-tags { display:flex; flex-wrap:wrap; gap:7px; }
+  .wtag { background: var(--wrong-bg); border:2px solid var(--wrong); color:var(--wrong); font-family:'Zen Kurenaido'; font-size:1.1rem; padding:3px 11px; border-radius:8px; }
+
+  .btn-gap { height: 10px; }
+
+  /* ─── 대화문 탭 ─── */
+  .lesson-selector { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .lesson-btn {
+    flex: 1 1 calc(25% - 8px); min-width: 70px; padding: 9px 4px;
+    background: var(--paper); border:2.5px solid var(--ink); border-radius:10px;
+    font-family:'Gaegu',cursive; font-weight:700; font-size:0.95rem; color:var(--ink-soft);
+    cursor:pointer; box-shadow: 2px 2px 0 rgba(51,64,74,0.15); transition:all .12s;
+  }
+  .lesson-btn:hover { background: var(--yellow); }
+  .lesson-btn.active { background: var(--ink); color:#fff; box-shadow: 1px 1px 0 var(--ink-soft); }
+
+  .placeholder-note {
+    background: var(--paper);
+    border: 2.5px dashed var(--ink-soft);
+    border-radius: 16px;
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+  .placeholder-note .pn-emoji { font-size: 2.5rem; display:block; margin-bottom: 12px; }
+  .placeholder-note .pn-title { font-family:'Gaegu',cursive; font-weight:700; font-size:1.2rem; color:var(--ink); margin-bottom:6px; }
+  .placeholder-note .pn-desc { font-size: 0.88rem; line-height:1.6; }
+
+  @media (max-width: 420px) {
+    .q-main { font-size: 3.6rem; }
+    .options { grid-template-columns: 1fr 1fr; }
+    .header-title { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="notebook">
+  <!-- 스프링 -->
+  <div class="spiral">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="tape left"></div>
+    <div class="tape right"></div>
+    <div class="header-title">使命者班クラスルーム</div>
+    <div class="header-sub">사명자반 교실 · 하반기</div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('quiz')"><span class="tab-emoji">✏️</span>퀴즈</button>
+    <button class="tab-btn" onclick="switchTab('dialogue')"><span class="tab-emoji">🎧</span>대화문</button>
+  </div>
+
+  <div class="page">
+
+    <!-- ══════════ 퀴즈 탭 ══════════ -->
+    <div class="tab-panel active" id="tab-quiz">
+
+      <!-- 시작 화면 -->
+      <div class="screen active" id="screen-start">
+        <div class="sheet-title">오늘의 연습 <small>학습 모드를 골라보세요</small></div>
+        <div class="mode-list">
+          <div class="mode-card selected" data-mode="kata-hira" onclick="selectMode(this)">
+            <div class="mode-emoji">ア</div>
+            <div class="mode-text">
+              <div class="mode-name">가타카나 → 히라가나</div>
+              <div class="mode-desc">ア 를 보고 あ 고르기</div>
+            </div>
+          </div>
+          <div class="mode-card" data-mode="kata-roma" onclick="selectMode(this)">
+            <div class="mode-emoji">A</div>
+            <div class="mode-text">
+              <div class="mode-name">가타카나 → 알파벳</div>
+              <div class="mode-desc">ア 를 보고 a 고르기</div>
+            </div>
+          </div>
+        </div>
+        <div class="count-row">
+          <span class="count-label">문제 수</span>
+          <button class="count-btn" onclick="changeCount(-5)">−</button>
+          <span class="count-display" id="count-display">10</span>
+          <button class="count-btn" onclick="changeCount(5)">+</button>
+        </div>
+        <button class="btn-primary" onclick="startQuiz()">연습 시작하기 ✐</button>
+      </div>
+
+      <!-- 퀴즈 화면 -->
+      <div class="screen" id="screen-quiz">
+        <div class="progress-wrap">
+          <div class="progress-info"><span id="prog-text">1 / 10</span><span id="score-text">점수 0</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+        </div>
+        <div class="q-card">
+          <div class="q-tag" id="q-tag">문제 1</div>
+          <div class="q-label" id="q-label">발음이 같은 히라가나는?</div>
+          <div class="q-main" id="q-main">ア</div>
+        </div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <button class="btn-dark" id="next-btn" onclick="nextQuestion()">다음 문제 →</button>
+      </div>
+
+      <!-- 결과 화면 -->
+      <div class="screen" id="screen-result">
+        <div class="result-card">
+          <div class="result-face" id="result-face">よくできました！</div>
+          <div class="result-label">오늘의 점수</div>
+          <div class="result-score" id="result-score">0 / 0</div>
+          <div class="result-msg" id="result-msg"></div>
+          <div class="result-stats">
+            <div><div class="stat-num c" id="stat-c">0</div><div class="stat-lbl">정답</div></div>
+            <div><div class="stat-num" id="stat-t" style="color:var(--ink-soft)">0</div><div class="stat-lbl">전체</div></div>
+            <div><div class="stat-num w" id="stat-w">0</div><div class="stat-lbl">오답</div></div>
+          </div>
+        </div>
+        <div class="wrong-box" id="wrong-box" style="display:none">
+          <div class="wrong-box-title">✗ 틀린 글자 복습</div>
+          <div class="wrong-tags" id="wrong-tags"></div>
+        </div>
+        <button class="btn-primary" onclick="startQuiz()">다시 풀기 ↺</button>
+        <div class="btn-gap"></div>
+        <button class="btn-ghost" onclick="goMenu()">← 모드 선택</button>
+      </div>
+
+    </div><!-- /퀴즈 탭 -->
+
+    <!-- ══════════ 대화문 탭 ══════════ -->
+    <div class="tab-panel" id="tab-dialogue">
+      <div class="lesson-selector" id="lesson-selector">
+        <!-- 강의가 추가되면 여기에 버튼이 생깁니다 -->
+      </div>
+      <div class="placeholder-note">
+        <span class="pn-emoji">📖</span>
+        <div class="pn-title">대화문 준비 중이에요</div>
+        <div class="pn-desc">
+          1강 대화문과 녹음 파일이 준비되면<br>
+          이곳에 스크립트 · 듣기 · 빈칸 채우기 퀴즈가<br>
+          한 강씩 추가됩니다. (총 8강)
+        </div>
+      </div>
+    </div><!-- /대화문 탭 -->
+
+  </div><!-- /page -->
+</div><!-- /notebook -->
+
+<script>
+// ─── 탭 전환 ───
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0&&tab==='quiz')||(i===1&&tab==='dialogue'));
+  });
+  document.getElementById('tab-quiz').classList.toggle('active', tab==='quiz');
+  document.getElementById('tab-dialogue').classList.toggle('active', tab==='dialogue');
+}
+
+// ─── 가타카나 데이터 (청음 46자) ───
+const KATAKANA = [
+  {k:'ア',h:'あ',r:'a'},{k:'イ',h:'い',r:'i'},{k:'ウ',h:'う',r:'u'},{k:'エ',h:'え',r:'e'},{k:'オ',h:'お',r:'o'},
+  {k:'カ',h:'か',r:'ka'},{k:'キ',h:'き',r:'ki'},{k:'ク',h:'く',r:'ku'},{k:'ケ',h:'け',r:'ke'},{k:'コ',h:'こ',r:'ko'},
+  {k:'サ',h:'さ',r:'sa'},{k:'シ',h:'し',r:'shi'},{k:'ス',h:'す',r:'su'},{k:'セ',h:'せ',r:'se'},{k:'ソ',h:'そ',r:'so'},
+  {k:'タ',h:'た',r:'ta'},{k:'チ',h:'ち',r:'chi'},{k:'ツ',h:'つ',r:'tsu'},{k:'テ',h:'て',r:'te'},{k:'ト',h:'と',r:'to'},
+  {k:'ナ',h:'な',r:'na'},{k:'ニ',h:'に',r:'ni'},{k:'ヌ',h:'ぬ',r:'nu'},{k:'ネ',h:'ね',r:'ne'},{k:'ノ',h:'の',r:'no'},
+  {k:'ハ',h:'は',r:'ha'},{k:'ヒ',h:'ひ',r:'hi'},{k:'フ',h:'ふ',r:'fu'},{k:'ヘ',h:'へ',r:'he'},{k:'ホ',h:'ほ',r:'ho'},
+  {k:'マ',h:'ま',r:'ma'},{k:'ミ',h:'み',r:'mi'},{k:'ム',h:'む',r:'mu'},{k:'メ',h:'め',r:'me'},{k:'モ',h:'も',r:'mo'},
+  {k:'ヤ',h:'や',r:'ya'},{k:'ユ',h:'ゆ',r:'yu'},{k:'ヨ',h:'よ',r:'yo'},
+  {k:'ラ',h:'ら',r:'ra'},{k:'リ',h:'り',r:'ri'},{k:'ル',h:'る',r:'ru'},{k:'レ',h:'れ',r:'re'},{k:'ロ',h:'ろ',r:'ro'},
+  {k:'ワ',h:'わ',r:'wa'},{k:'ヲ',h:'を',r:'wo'},{k:'ン',h:'ん',r:'n'},
+];
+
+// ─── 알림음 ───
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playCorrect() {
+  const t = audioCtx.currentTime;
+  [523,659,784].forEach((f,i)=>{
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    o.frequency.value=f; o.type='sine';
+    g.gain.setValueAtTime(0.3,t+i*0.12);
+    g.gain.exponentialRampToValueAtTime(0.001,t+i*0.12+0.25);
+    o.start(t+i*0.12); o.stop(t+i*0.12+0.25);
+  });
+}
+function playWrong() {
+  const t = audioCtx.currentTime;
+  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+  o.connect(g); g.connect(audioCtx.destination);
+  o.frequency.setValueAtTime(300,t);
+  o.frequency.exponentialRampToValueAtTime(150,t+0.35);
+  o.type='sawtooth';
+  g.gain.setValueAtTime(0.25,t);
+  g.gain.exponentialRampToValueAtTime(0.001,t+0.4);
+  o.start(t); o.stop(t+0.4);
+}
+
+// ─── 퀴즈 로직 ───
+let mode='kata-hira', quizCount=10, questions=[], current=0, score=0, wrongItems=[], answered=false;
+
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function getRandom(a,n){return shuffle(a).slice(0,n);}
+
+function selectMode(el){
+  document.querySelectorAll('.mode-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected'); mode=el.dataset.mode;
+}
+function changeCount(d){ quizCount=Math.min(20,Math.max(5,quizCount+d)); document.getElementById('count-display').textContent=quizCount; }
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+function answerKey(){ return mode==='kata-hira' ? 'h' : 'r'; }
+
+function startQuiz(){
+  questions = getRandom(KATAKANA, Math.min(quizCount, KATAKANA.length));
+  current=0; score=0; wrongItems=[];
+  showScreen('screen-quiz'); renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const q=questions[current], key=answerKey(), total=questions.length;
+  document.getElementById('prog-text').textContent=`${current+1} / ${total}`;
+  document.getElementById('score-text').textContent=`점수 ${score}`;
+  document.getElementById('prog-fill').style.width=`${(current/total)*100}%`;
+  document.getElementById('q-tag').textContent=`문제 ${current+1}`;
+  document.getElementById('q-label').textContent = mode==='kata-hira' ? '같은 소리의 히라가나는?' : '알파벳 발음은?';
+  document.getElementById('q-main').textContent=q.k;
+
+  const correct=q[key];
+  const wrongs=getRandom(KATAKANA.filter(x=>x[key]!==correct),3).map(x=>x[key]);
+  const opts=shuffle([correct,...wrongs]);
+  const grid=document.getElementById('options'); grid.innerHTML='';
+  opts.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=opt;
+    b.onclick=()=>checkAnswer(b,opt,correct,q.k);
+    grid.appendChild(b);
+  });
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('feedback').textContent='';
+  document.getElementById('next-btn').className='btn-dark';
+}
+
+function checkAnswer(btn,chosen,correct,katakana){
+  if(answered) return; answered=true;
+  document.querySelectorAll('.opt').forEach(b=>{ b.disabled=true; if(b.textContent===correct)b.classList.add('correct'); });
+  const fb=document.getElementById('feedback');
+  if(chosen===correct){
+    score++; btn.classList.add('correct');
+    fb.textContent='✓ 정답이에요!'; fb.className='feedback show ok';
+    playCorrect();
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent=`✗ 아쉬워요 — 정답: ${correct}`; fb.className='feedback show no';
+    wrongItems.push(katakana); playWrong();
+  }
+  document.getElementById('score-text').textContent=`점수 ${score}`;
+  document.getElementById('next-btn').className='btn-dark show';
+}
+
+function nextQuestion(){ current++; if(current>=questions.length) showResult(); else renderQuestion(); }
+
+function showResult(){
+  showScreen('screen-result');
+  const total=questions.length, pct=score/total;
+  let face,msg;
+  if(pct===1){face='かんぺき！';msg='만점이에요! 완벽합니다 🎉';}
+  else if(pct>=0.8){face='すごい！';msg='아주 잘했어요! 조금만 더!';}
+  else if(pct>=0.6){face='いいね！';msg='잘 하고 있어요. 복습해봐요!';}
+  else{face='がんばって！';msg='조금 더 연습해봐요. 화이팅!';}
+  document.getElementById('result-face').textContent=face;
+  document.getElementById('result-score').textContent=`${score} / ${total}`;
+  document.getElementById('result-msg').textContent=msg;
+  document.getElementById('stat-c').textContent=score;
+  document.getElementById('stat-t').textContent=total;
+  document.getElementById('stat-w').textContent=total-score;
+  const box=document.getElementById('wrong-box'), tags=document.getElementById('wrong-tags');
+  if(wrongItems.length>0){ box.style.display='block'; tags.innerHTML=wrongItems.map(w=>`<span class="wtag">${w}</span>`).join(''); }
+  else box.style.display='none';
+}
+
+function goMenu(){ showScreen('screen-start'); }
+</script>
+</body>
+</html>
