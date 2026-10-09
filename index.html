@@ -354,6 +354,104 @@
   .placeholder-note .pn-title { font-family:'Gaegu',cursive; font-weight:700; font-size:1.2rem; color:var(--ink); margin-bottom:6px; }
   .placeholder-note .pn-desc { font-size: 0.88rem; line-height:1.6; }
 
+  /* ─── 대화문 과 제목 ─── */
+  .dialogue-header {
+    background: var(--yellow);
+    border: 2.5px solid var(--ink);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    box-shadow: 3px 3px 0 rgba(51,64,74,0.15);
+  }
+  .dialogue-lesson { font-family:'Gaegu',cursive; font-weight:700; font-size:0.85rem; color:var(--ink-soft); }
+  .dialogue-title { font-family:'Zen Kurenaido'; font-size:1.3rem; font-weight:700; color:var(--ink); }
+
+  /* ─── 오디오 플레이어 ─── */
+  .audio-wrap {
+    background: var(--ink); border:2.5px solid var(--ink); border-radius:14px;
+    padding: 13px 16px; display:flex; align-items:center; gap:13px;
+    margin-bottom: 16px; box-shadow: 3px 3px 0 var(--ink-soft);
+  }
+  .audio-play-btn {
+    width:42px; height:42px; border-radius:50%;
+    background: var(--mint); border:2.5px solid #fff; color:#fff;
+    font-size:1rem; cursor:pointer; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .audio-play-btn:hover { background: var(--mint-dark); }
+  .audio-info { flex:1; min-width:0; }
+  .audio-title { font-family:'Gaegu',cursive; font-weight:700; font-size:0.85rem; color:var(--yellow); margin-bottom:6px; }
+  .audio-bar-wrap { height:6px; background: rgba(255,255,255,0.2); border-radius:4px; cursor:pointer; }
+  .audio-bar-fill { height:100%; background: var(--mint); width:0%; border-radius:4px; transition:width .3s; }
+  .audio-time { font-size:0.7rem; color:rgba(255,255,255,0.55); margin-top:5px; font-family:'Gaegu',cursive; }
+
+  /* ─── 대화문 본문 ─── */
+  .dialogue-text-card {
+    background: var(--paper); border:2.5px solid var(--ink); border-radius:14px;
+    padding: 18px; margin-bottom:18px; box-shadow: 3px 3px 0 rgba(51,64,74,0.15);
+  }
+  .dialogue-text-label { font-family:'Gaegu',cursive; font-weight:700; font-size:0.8rem; color:var(--ink-soft); margin-bottom:12px; }
+  .dialogue-scene { font-size:0.82rem; color:var(--ink-soft); font-style:italic; margin-bottom:12px; padding-bottom:8px; border-bottom:1.5px dashed var(--rule); }
+  .dialogue-line { display:flex; gap:10px; margin-bottom:12px; align-items:flex-start; }
+  .dl-speaker { font-family:'Gaegu',cursive; font-weight:700; font-size:0.82rem; color:var(--coral); min-width:56px; flex-shrink:0; padding-top:3px; }
+  .dl-text { font-family:'Zen Kurenaido'; font-size:1.05rem; line-height:1.6; color:var(--ink); }
+  .dl-ko { font-size:0.78rem; color:var(--ink-soft); margin-top:2px; }
+
+  /* ─── 빈칸 퀴즈 ─── */
+  .dq-section-title {
+    font-family:'Gaegu',cursive; font-weight:700; font-size:1.05rem; color:var(--ink);
+    display:flex; align-items:center; gap:8px; margin:16px 0; padding:8px 0;
+  }
+  .dq-section-title::before, .dq-section-title::after { content:''; flex:1; height:2px; background:var(--rule); }
+  .dq-card {
+    background: var(--paper); border:2.5px solid var(--ink); border-radius:14px;
+    padding: 18px; margin-bottom:16px; box-shadow: 3px 3px 0 rgba(51,64,74,0.15); position:relative;
+  }
+  .dq-num {
+    position:absolute; top:-11px; left:14px; background: var(--coral); color:#fff;
+    font-family:'Gaegu',cursive; font-weight:700; font-size:0.78rem; padding:1px 11px;
+    border-radius:12px; border:2px solid var(--ink);
+  }
+  .dq-prompt { font-family:'Zen Kurenaido'; font-size:1.1rem; line-height:1.9; margin-bottom:4px; margin-top:4px; color:var(--ink); }
+  .dq-blank {
+    display:inline-block; min-width:90px; border-bottom:2.5px solid var(--ink);
+    text-align:center; color:var(--ink-soft); font-size:0.9rem; font-style:italic;
+    vertical-align:bottom; padding:0 6px; transition:all .2s;
+  }
+  .dq-blank.filled-correct { color:var(--correct); border-color:var(--correct); font-style:normal; font-weight:700; }
+  .dq-blank.filled-wrong { color:var(--wrong); border-color:var(--wrong); font-style:normal; }
+  .dq-ko { font-size:0.8rem; color:var(--ink-soft); margin-bottom:14px; }
+  .dq-opts { display:flex; flex-wrap:wrap; gap:8px; }
+  .dq-opt {
+    padding:9px 14px; background: var(--paper); border:2.5px solid var(--ink); border-radius:10px;
+    font-family:'Zen Kurenaido'; font-size:1rem; color:var(--ink); cursor:pointer;
+    box-shadow: 2px 2px 0 rgba(51,64,74,0.15); transition:all .12s;
+  }
+  .dq-opt:hover:not(:disabled) { background: var(--yellow); transform:translate(-1px,-1px); }
+  .dq-opt:disabled { cursor:default; }
+  .dq-opt.correct-opt { background: var(--correct-bg) !important; border-color:var(--correct); color:var(--correct); }
+  .dq-fb { margin-top:10px; font-family:'Gaegu',cursive; font-weight:700; font-size:0.85rem; display:none; }
+  .dq-fb.show { display:block; }
+  .dq-fb.ok { color:var(--correct); }
+  .dq-fb.no { color:var(--wrong); }
+
+  .dq-result {
+    background: var(--correct-bg); border:2.5px solid var(--correct); border-radius:14px;
+    padding:22px; text-align:center; display:none; box-shadow: 3px 3px 0 var(--mint);
+  }
+  .dq-result.show { display:block; }
+  .dq-result-title { font-family:'Zen Kurenaido'; font-size:1.6rem; color:var(--mint-dark); margin-bottom:6px; }
+  .dq-result-score { font-family:'Gaegu',cursive; font-weight:700; font-size:1.05rem; color:var(--ink); margin-bottom:4px; }
+  .dq-result-msg { font-size:0.85rem; color:var(--ink-soft); }
+  .dq-retry-btn {
+    margin-top:14px; width:100%; padding:12px; background: var(--mint); color:#fff;
+    border:2.5px solid var(--ink); border-radius:12px; font-family:'Gaegu',cursive; font-weight:700;
+    font-size:1rem; cursor:pointer; box-shadow: 3px 3px 0 var(--ink); transition:all .1s;
+  }
+  .dq-retry-btn:hover { transform:translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+  .lesson-panel { display:none; }
+  .lesson-panel.active { display:block; }
+
   @media (max-width: 420px) {
     .q-main { font-size: 3.6rem; }
     .options { grid-template-columns: 1fr 1fr; }
@@ -461,18 +559,436 @@
 
     <!-- ══════════ 대화문 탭 ══════════ -->
     <div class="tab-panel" id="tab-dialogue">
-      <div class="lesson-selector" id="lesson-selector">
-        <!-- 강의가 추가되면 여기에 버튼이 생깁니다 -->
+      <div class="lesson-selector">
+        <button class="lesson-btn active" onclick="switchLesson(15)">第15課</button>
+        <button class="lesson-btn" onclick="switchLesson(16)">第16課</button>
+        <button class="lesson-btn" onclick="switchLesson(17)">第17課</button>
       </div>
-      <div class="placeholder-note">
-        <span class="pn-emoji">📖</span>
-        <div class="pn-title">대화문 준비 중이에요</div>
-        <div class="pn-desc">
-          1강 대화문과 녹음 파일이 준비되면<br>
-          이곳에 스크립트 · 듣기 · 빈칸 채우기 퀴즈가<br>
-          한 강씩 추가됩니다. (총 8강)
+
+      <!-- ══ 第15課 ══ -->
+      <div id="lesson-15" class="lesson-panel active">
+        <div class="dialogue-header">
+          <div class="dialogue-lesson">第15課</div>
+          <div class="dialogue-title">あまくておいしいです</div>
+        </div>
+        <div class="audio-wrap">
+          <button class="audio-play-btn" id="play-btn-15" onclick="toggleAudio(15)">▶</button>
+          <div class="audio-info">
+            <div class="audio-title">🎧 대화문 듣기</div>
+            <div class="audio-bar-wrap" onclick="seekAudio(event,15)"><div class="audio-bar-fill" id="audio-bar-15"></div></div>
+            <div class="audio-time" id="audio-time-15">0:00 / 0:00</div>
+          </div>
+        </div>
+        <audio id="audio-15" src="lesson15.mp3"></audio>
+
+        <div class="dialogue-text-card">
+          <div class="dialogue-text-label">대화문 본문</div>
+          <div class="dialogue-scene">パン屋(や)で (빵집에서)</div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">ゆりさん、おひさしぶりです。おげんきですか。</div><div class="dl-ko">유리 씨, 오랜만이에요. 잘 지내세요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">ゆり</div><div><div class="dl-text">はい、げんきです。ごしゅじんは おげんきですか。</div><div class="dl-ko">네, 잘 지내요. 남편분은 잘 지내세요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">はい、おかげさまで。</div><div class="dl-ko">네, 덕분에.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">ゆり</div><div><div class="dl-text">ここのパン、おいしいですね。</div><div class="dl-ko">여기 빵 맛있죠?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">そうですね。しゅじんは この みせの パンが だいすきです。</div><div class="dl-ko">네. 남편이 이 가게 빵을 무척 좋아해요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">ゆり</div><div><div class="dl-text">わたしも ここの パンが だいすきです。あまくて おいしいです。</div><div class="dl-ko">저도 여기 빵을 무척 좋아해요. 달고 맛있어요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">パン屋の オーナーは とても やさしくて いい ひとです。</div><div class="dl-ko">빵집 사장님이 매우 친절하고 좋은 사람이에요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">ゆり</div><div><div class="dl-text">そうですか。みせの なかも とても きれいですね。</div><div class="dl-ko">그래요? 가게 안도 아주 깨끗하네요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">ゆりさん、明日(あした)いそがしいですか。時間(じかん)ありますか。おちゃでもどうですか。</div><div class="dl-ko">유리 씨, 내일 바쁘세요? 시간 있어요? 차라도 하면 어때요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">ゆり</div><div><div class="dl-text">明日(あした)いいですよ。たのしみです。</div><div class="dl-ko">내일 좋아요. 기대되네요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">すずき</div><div><div class="dl-text">では、明日(あした)の あさ１０時(じ)に ここで。</div><div class="dl-ko">그럼 내일 아침 10시 여기에서 봐요.</div></div></div>
+        </div>
+
+        <div class="dq-section-title">빈칸 채우기</div>
+
+        <div class="dq-card" id="dq15-1"><div class="dq-num">Q1</div>
+          <div class="dq-prompt">すずき：ゆりさん、<span class="dq-blank" id="b15-1">고르세요</span>。</div>
+          <div class="dq-ko">유리 씨, 오랜만이에요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-1','おひさしぶりです','fb15-1','dq15-1',15)">はじめまして</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-1','おひさしぶりです','fb15-1','dq15-1',15)">おひさしぶりです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-1','おひさしぶりです','fb15-1','dq15-1',15)">おかげさまで</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-1','おひさしぶりです','fb15-1','dq15-1',15)">おつかれさまです</button>
+          </div><div class="dq-fb" id="fb15-1"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-2"><div class="dq-num">Q2</div>
+          <div class="dq-prompt">すずき：<span class="dq-blank" id="b15-2">고르세요</span>。</div>
+          <div class="dq-ko">잘 지내세요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-2','おげんきですか','fb15-2','dq15-2',15)">おげんきですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-2','おげんきですか','fb15-2','dq15-2',15)">おいしいですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-2','おげんきですか','fb15-2','dq15-2',15)">いそがしいですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-2','おげんきですか','fb15-2','dq15-2',15)">きれいですか</button>
+          </div><div class="dq-fb" id="fb15-2"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-3"><div class="dq-num">Q3</div>
+          <div class="dq-prompt">ゆり：<span class="dq-blank" id="b15-3">고르세요</span>は おげんきですか。</div>
+          <div class="dq-ko">남편분은 잘 지내세요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-3','ごしゅじん','fb15-3','dq15-3',15)">おくさん</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-3','ごしゅじん','fb15-3','dq15-3',15)">ごしゅじん</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-3','ごしゅじん','fb15-3','dq15-3',15)">おとうさま</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-3','ごしゅじん','fb15-3','dq15-3',15)">オーナー</button>
+          </div><div class="dq-fb" id="fb15-3"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-4"><div class="dq-num">Q4</div>
+          <div class="dq-prompt">すずき：はい、<span class="dq-blank" id="b15-4">고르세요</span>。</div>
+          <div class="dq-ko">네, 덕분에.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-4','おかげさまで','fb15-4','dq15-4',15)">おかげさまで</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-4','おかげさまで','fb15-4','dq15-4',15)">おひさしぶりです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-4','おかげさまで','fb15-4','dq15-4',15)">だいすきです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-4','おかげさまで','fb15-4','dq15-4',15)">たのしみです</button>
+          </div><div class="dq-fb" id="fb15-4"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-5"><div class="dq-num">Q5</div>
+          <div class="dq-prompt">ゆり：ここのパン、<span class="dq-blank" id="b15-5">고르세요</span>。</div>
+          <div class="dq-ko">여기 빵 맛있죠?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-5','おいしいですね','fb15-5','dq15-5',15)">きれいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-5','おいしいですね','fb15-5','dq15-5',15)">おいしいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-5','おいしいですね','fb15-5','dq15-5',15)">やさしいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-5','おいしいですね','fb15-5','dq15-5',15)">あまいですね</button>
+          </div><div class="dq-fb" id="fb15-5"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-6"><div class="dq-num">Q6</div>
+          <div class="dq-prompt">すずき：しゅじんは この みせの <span class="dq-blank" id="b15-6">고르세요</span>。</div>
+          <div class="dq-ko">남편이 이 가게 빵을 무척 좋아해요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-6','パンが だいすきです','fb15-6','dq15-6',15)">パンが だいすきです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-6','パンが だいすきです','fb15-6','dq15-6',15)">パンが すきです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-6','パンが だいすきです','fb15-6','dq15-6',15)">パンを かいます</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-6','パンが だいすきです','fb15-6','dq15-6',15)">パンが おいしいです</button>
+          </div><div class="dq-fb" id="fb15-6"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-7"><div class="dq-num">Q7</div>
+          <div class="dq-prompt">ゆり：<span class="dq-blank" id="b15-7">고르세요</span>。</div>
+          <div class="dq-ko">달고 맛있어요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-7','あまくて おいしいです','fb15-7','dq15-7',15)">あまくて おいしいです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-7','あまくて おいしいです','fb15-7','dq15-7',15)">やさしくて いいです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-7','あまくて おいしいです','fb15-7','dq15-7',15)">あまいで おいしいです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-7','あまくて おいしいです','fb15-7','dq15-7',15)">おいしくて あまいです</button>
+          </div><div class="dq-fb" id="fb15-7"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-8"><div class="dq-num">Q8</div>
+          <div class="dq-prompt">すずき：パン屋の オーナーは とても <span class="dq-blank" id="b15-8">고르세요</span>。</div>
+          <div class="dq-ko">매우 친절하고 좋은 사람이에요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-8','やさしくて いい ひとです','fb15-8','dq15-8',15)">やさしくて いい ひとです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-8','やさしくて いい ひとです','fb15-8','dq15-8',15)">あまくて おいしい ひとです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-8','やさしくて いい ひとです','fb15-8','dq15-8',15)">きれいで いい ひとです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-8','やさしくて いい ひとです','fb15-8','dq15-8',15)">やさしいで いい ひとです</button>
+          </div><div class="dq-fb" id="fb15-8"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-9"><div class="dq-num">Q9</div>
+          <div class="dq-prompt">ゆり：<span class="dq-blank" id="b15-9">고르세요</span>。</div>
+          <div class="dq-ko">가게 안도 아주 깨끗하네요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-9','みせの なかも とても きれいですね','fb15-9','dq15-9',15)">みせの なかも とても きれいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-9','みせの なかも とても きれいですね','fb15-9','dq15-9',15)">みせの パンも とても おいしいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-9','みせの なかも とても きれいですね','fb15-9','dq15-9',15)">みせの なかも とても ひろいですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-9','みせの なかも とても きれいですね','fb15-9','dq15-9',15)">オーナーも とても やさしいですね</button>
+          </div><div class="dq-fb" id="fb15-9"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-10"><div class="dq-num">Q10</div>
+          <div class="dq-prompt">すずき：ゆりさん、明日(あした)<span class="dq-blank" id="b15-10">고르세요</span>ですか。</div>
+          <div class="dq-ko">내일 바쁘세요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-10','いそがしい','fb15-10','dq15-10',15)">いそがしい</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-10','いそがしい','fb15-10','dq15-10',15)">たのしい</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-10','いそがしい','fb15-10','dq15-10',15)">うれしい</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-10','いそがしい','fb15-10','dq15-10',15)">おいしい</button>
+          </div><div class="dq-fb" id="fb15-10"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-11"><div class="dq-num">Q11</div>
+          <div class="dq-prompt">すずき：時間(じかん)<span class="dq-blank" id="b15-11">고르세요</span>。</div>
+          <div class="dq-ko">시간 있어요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-11','ありますか','fb15-11','dq15-11',15)">ありますか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-11','ありますか','fb15-11','dq15-11',15)">ありませんか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-11','ありますか','fb15-11','dq15-11',15)">いますか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-11','ありますか','fb15-11','dq15-11',15)">ありましたか</button>
+          </div><div class="dq-fb" id="fb15-11"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-12"><div class="dq-num">Q12</div>
+          <div class="dq-prompt">すずき：<span class="dq-blank" id="b15-12">고르세요</span>。</div>
+          <div class="dq-ko">차라도 하면 어때요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-12','おちゃでもどうですか','fb15-12','dq15-12',15)">おちゃでもどうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-12','おちゃでもどうですか','fb15-12','dq15-12',15)">おちゃをのみますか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-12','おちゃでもどうですか','fb15-12','dq15-12',15)">パンでもどうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-12','おちゃでもどうですか','fb15-12','dq15-12',15)">おちゃでもいいですか</button>
+          </div><div class="dq-fb" id="fb15-12"></div>
+        </div>
+
+        <div class="dq-card" id="dq15-13"><div class="dq-num">Q13</div>
+          <div class="dq-prompt">ゆり：<span class="dq-blank" id="b15-13">고르세요</span>。</div>
+          <div class="dq-ko">기대되네요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b15-13','たのしみです','fb15-13','dq15-13',15)">たのしみです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-13','たのしみです','fb15-13','dq15-13',15)">たのしいです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-13','たのしみです','fb15-13','dq15-13',15)">うれしいです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b15-13','たのしみです','fb15-13','dq15-13',15)">いいですね</button>
+          </div><div class="dq-fb" id="fb15-13"></div>
+        </div>
+
+        <div class="dq-result" id="dq-result-15">
+          <div class="dq-result-title" id="dq-result-title-15"></div>
+          <div class="dq-result-score" id="dq-result-score-15"></div>
+          <div class="dq-result-msg" id="dq-result-msg-15"></div>
+          <button class="dq-retry-btn" onclick="resetLesson(15)">다시 풀기 ↺</button>
         </div>
       </div>
+
+      <!-- ══ 第16課 ══ -->
+      <div id="lesson-16" class="lesson-panel">
+        <div class="dialogue-header">
+          <div class="dialogue-lesson">第16課</div>
+          <div class="dialogue-title">ゆうめいですてきなひとです</div>
+        </div>
+        <div class="audio-wrap">
+          <button class="audio-play-btn" id="play-btn-16" onclick="toggleAudio(16)">▶</button>
+          <div class="audio-info">
+            <div class="audio-title">🎧 대화문 듣기</div>
+            <div class="audio-bar-wrap" onclick="seekAudio(event,16)"><div class="audio-bar-fill" id="audio-bar-16"></div></div>
+            <div class="audio-time" id="audio-time-16">0:00 / 0:00</div>
+          </div>
+        </div>
+        <audio id="audio-16" src="lesson16.mp3"></audio>
+
+        <div class="dialogue-text-card">
+          <div class="dialogue-text-label">대화문 본문</div>
+          <div class="dialogue-scene">空港(くうこう)で (공항에서)</div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">はじめまして。佐藤(さとう)です。</div><div class="dl-ko">처음 뵙겠습니다. 사토입니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">マイケル</div><div><div class="dl-text">はじめまして。マイケルです。よろしく おねがいします。</div><div class="dl-ko">처음 뵙겠습니다. 마이클입니다. 잘 부탁드립니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">おつかれさまでした。</div><div class="dl-ko">고생하셨습니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">マイケル</div><div><div class="dl-text">ありがとうございます。</div><div class="dl-ko">감사합니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">ひこうきの 中(なか)は 楽(らく)でしたか？</div><div class="dl-ko">비행기 안은 편안하셨습니까?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">マイケル</div><div><div class="dl-text">はい。となりに 俳優(はいゆう)の きむらたくやさんが いました。</div><div class="dl-ko">네, 옆에 배우 기무라 타쿠야 씨가 있었습니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">本当(ほんとう)ですか。彼(かれ)は 日本(にほん)で とても 有名(ゆうめい)で 素敵(すてき)な 俳優(はいゆう)です。</div><div class="dl-ko">정말입니까? 그는 일본에서 매우 유명하고 멋진 배우입니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">マイケル</div><div><div class="dl-text">そうですか。本当(ほんとう)に かっこいい 人(ひと)でしたね。</div><div class="dl-ko">그렇습니까? 정말 멋진 사람이었습니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">そうでしたか。では、行(い)きましょうか。</div><div class="dl-ko">그랬나요? 그럼, 갈까요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">マイケル</div><div><div class="dl-text">はい。会議(かいぎ)は 何時(なんじ)から 何時(なんじ)まで ですか。</div><div class="dl-ko">네, 회의는 몇 시부터 몇 시까지입니까?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">さとう</div><div><div class="dl-text">お昼(ひる)１２時(じ)から ３時(じ)まで です。</div><div class="dl-ko">낮 12시부터 3시까지입니다.</div></div></div>
+        </div>
+
+        <div class="dq-section-title">빈칸 채우기</div>
+
+        <div class="dq-card" id="dq16-1"><div class="dq-num">Q1</div>
+          <div class="dq-prompt">さとう：<span class="dq-blank" id="b16-1">고르세요</span>。</div>
+          <div class="dq-ko">고생하셨습니다.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-1','おつかれさまでした','fb16-1','dq16-1',16)">おつかれさまでした</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-1','おつかれさまでした','fb16-1','dq16-1',16)">おひさしぶりです</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-1','おつかれさまでした','fb16-1','dq16-1',16)">はじめまして</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-1','おつかれさまでした','fb16-1','dq16-1',16)">おかげさまで</button>
+          </div><div class="dq-fb" id="fb16-1"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-2"><div class="dq-num">Q2</div>
+          <div class="dq-prompt">さとう：<span class="dq-blank" id="b16-2">고르세요</span>。</div>
+          <div class="dq-ko">비행기 안은 편안하셨습니까?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-2','ひこうきの 中は 楽でしたか','fb16-2','dq16-2',16)">ひこうきの 中は 楽でしたか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-2','ひこうきの 中は 楽でしたか','fb16-2','dq16-2',16)">ひこうきの 中は 楽ですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-2','ひこうきの 中は 楽でしたか','fb16-2','dq16-2',16)">ひこうきの 中は きれいでしたか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-2','ひこうきの 中は 楽でしたか','fb16-2','dq16-2',16)">くうこうの 中は 楽でしたか</button>
+          </div><div class="dq-fb" id="fb16-2"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-3"><div class="dq-num">Q3</div>
+          <div class="dq-prompt">マイケル：はい。<span class="dq-blank" id="b16-3">고르세요</span>。</div>
+          <div class="dq-ko">옆에 배우 기무라 타쿠야 씨가 있었습니다.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-3','となりに 俳優の きむらたくやさんが いました','fb16-3','dq16-3',16)">となりに 俳優の きむらたくやさんが いました</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-3','となりに 俳優の きむらたくやさんが いました','fb16-3','dq16-3',16)">となりに 俳優の きむらたくやさんが います</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-3','となりに 俳優の きむらたくやさんが いました','fb16-3','dq16-3',16)">となりに 俳優の きむらたくやさんが ありました</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-3','となりに 俳優の きむらたくやさんが いました','fb16-3','dq16-3',16)">まえに 俳優の きむらたくやさんが いました</button>
+          </div><div class="dq-fb" id="fb16-3"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-4"><div class="dq-num">Q4</div>
+          <div class="dq-prompt">さとう：彼(かれ)は 日本(にほん)で <span class="dq-blank" id="b16-4">고르세요</span>。</div>
+          <div class="dq-ko">매우 유명하고 멋진 배우입니다.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-4','とても 有名で 素敵な 俳優です','fb16-4','dq16-4',16)">とても 有名で 素敵な 俳優です</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-4','とても 有名で 素敵な 俳優です','fb16-4','dq16-4',16)">とても 有名で 素敵の 俳優です</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-4','とても 有名で 素敵な 俳優です','fb16-4','dq16-4',16)">とても 有名な 素敵で 俳優です</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-4','とても 有名で 素敵な 俳優です','fb16-4','dq16-4',16)">とても 楽で 素敵な 俳優です</button>
+          </div><div class="dq-fb" id="fb16-4"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-5"><div class="dq-num">Q5</div>
+          <div class="dq-prompt">マイケル：そうですか。本当(ほんとう)に <span class="dq-blank" id="b16-5">고르세요</span>。</div>
+          <div class="dq-ko">정말 멋진 사람이었습니다.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-5','かっこいい 人でしたね','fb16-5','dq16-5',16)">かっこいい 人でしたね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-5','かっこいい 人でしたね','fb16-5','dq16-5',16)">かっこいい 人ですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-5','かっこいい 人でしたね','fb16-5','dq16-5',16)">すてきな 人でしたね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-5','かっこいい 人でしたね','fb16-5','dq16-5',16)">ゆうめいな 人でしたね</button>
+          </div><div class="dq-fb" id="fb16-5"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-6"><div class="dq-num">Q6</div>
+          <div class="dq-prompt">さとう：<span class="dq-blank" id="b16-6">고르세요</span>。</div>
+          <div class="dq-ko">그랬나요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-6','そうでしたか','fb16-6','dq16-6',16)">そうでしたか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-6','そうでしたか','fb16-6','dq16-6',16)">そうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-6','そうでしたか','fb16-6','dq16-6',16)">そうですね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-6','そうでしたか','fb16-6','dq16-6',16)">ほんとうですか</button>
+          </div><div class="dq-fb" id="fb16-6"></div>
+        </div>
+
+        <div class="dq-card" id="dq16-7"><div class="dq-num">Q7</div>
+          <div class="dq-prompt">マイケル：はい。会議(かいぎ)は <span class="dq-blank" id="b16-7">고르세요</span>。</div>
+          <div class="dq-ko">몇 시부터 몇 시까지입니까?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b16-7','何時から 何時まで ですか','fb16-7','dq16-7',16)">何時から 何時まで ですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-7','何時から 何時まで ですか','fb16-7','dq16-7',16)">何時から ですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-7','何時から 何時まで ですか','fb16-7','dq16-7',16)">いつから いつまで ですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b16-7','何時から 何時まで ですか','fb16-7','dq16-7',16)">何階から 何階まで ですか</button>
+          </div><div class="dq-fb" id="fb16-7"></div>
+        </div>
+
+        <div class="dq-result" id="dq-result-16">
+          <div class="dq-result-title" id="dq-result-title-16"></div>
+          <div class="dq-result-score" id="dq-result-score-16"></div>
+          <div class="dq-result-msg" id="dq-result-msg-16"></div>
+          <button class="dq-retry-btn" onclick="resetLesson(16)">다시 풀기 ↺</button>
+        </div>
+      </div>
+
+      <!-- ══ 第17課 ══ -->
+      <div id="lesson-17" class="lesson-panel">
+        <div class="dialogue-header">
+          <div class="dialogue-lesson">第17課</div>
+          <div class="dialogue-title">かいものに行きます</div>
+        </div>
+        <div class="audio-wrap">
+          <button class="audio-play-btn" id="play-btn-17" onclick="toggleAudio(17)">▶</button>
+          <div class="audio-info">
+            <div class="audio-title">🎧 대화문 듣기</div>
+            <div class="audio-bar-wrap" onclick="seekAudio(event,17)"><div class="audio-bar-fill" id="audio-bar-17"></div></div>
+            <div class="audio-time" id="audio-time-17">0:00 / 0:00</div>
+          </div>
+        </div>
+        <audio id="audio-17" src="lesson17.mp3"></audio>
+
+        <div class="dialogue-text-card">
+          <div class="dialogue-text-label">대화문 본문</div>
+          <div class="dialogue-scene">デパートで (백화점에서)</div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">はるこさん。おはようございます！</div><div class="dl-ko">하루코 씨, 안녕하세요!</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">おはようございます。おかいものですか。</div><div class="dl-ko">안녕하세요. 쇼핑하세요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">はい。これから さいふを かいに いきます。</div><div class="dl-ko">네, 이제 지갑 사러 가려고요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">そうですか。ご主人(しゅじん)への プレゼントですか。</div><div class="dl-ko">그러시군요. 남편분 드릴 선물인가요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">いいえ、あした 父(ちち)の たんじょうびなんです。</div><div class="dl-ko">아니요. 내일 아버지 생신이거든요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">そうですか。おさいふ、おとうさまが よろこびますね。</div><div class="dl-ko">그러세요? 지갑, 아버님이 좋아하시겠네요.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">そうですかね。はるこさんは？</div><div class="dl-ko">그럴까요? 하루코 씨는요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">わたしは すしを かいに きました。</div><div class="dl-ko">저는 초밥을 사러 왔습니다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">おすし、おいしそう～</div><div class="dl-ko">초밥, 맛있겠다.</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">おとうさまの おたんじょうびに おすし どうですか。</div><div class="dl-ko">아버지 생신에 초밥 어떠세요?</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">れいこ</div><div><div class="dl-text">それ、いいかも。</div><div class="dl-ko">그거 좋네요(좋을지도).</div></div></div>
+          <div class="dialogue-line"><div class="dl-speaker">はるこ</div><div><div class="dl-text">では、あした、たのしい じかんを おくって くださいね。</div><div class="dl-ko">그럼, 내일 즐거운 시간 보내세요.</div></div></div>
+        </div>
+
+        <div class="dq-section-title">빈칸 채우기</div>
+
+        <div class="dq-card" id="dq17-1"><div class="dq-num">Q1</div>
+          <div class="dq-prompt">はるこ：おはようございます。<span class="dq-blank" id="b17-1">고르세요</span>ですか。</div>
+          <div class="dq-ko">쇼핑하세요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-1','おかいもの','fb17-1','dq17-1',17)">おかいもの</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-1','おかいもの','fb17-1','dq17-1',17)">おしごと</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-1','おかいもの','fb17-1','dq17-1',17)">おさんぽ</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-1','おかいもの','fb17-1','dq17-1',17)">おりょこう</button>
+          </div><div class="dq-fb" id="fb17-1"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-2"><div class="dq-num">Q2</div>
+          <div class="dq-prompt">れいこ：はい。これから <span class="dq-blank" id="b17-2">고르세요</span>。</div>
+          <div class="dq-ko">이제 지갑 사러 가려고요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-2','さいふを かいに いきます','fb17-2','dq17-2',17)">さいふを かいに いきます</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-2','さいふを かいに いきます','fb17-2','dq17-2',17)">さいふを かいに きました</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-2','さいふを かいに いきます','fb17-2','dq17-2',17)">すしを かいに いきます</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-2','さいふを かいに いきます','fb17-2','dq17-2',17)">さいふが かいに いきます</button>
+          </div><div class="dq-fb" id="fb17-2"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-3"><div class="dq-num">Q3</div>
+          <div class="dq-prompt">はるこ：そうですか。<span class="dq-blank" id="b17-3">고르세요</span>。</div>
+          <div class="dq-ko">남편분 드릴 선물인가요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-3','ご主人への プレゼントですか','fb17-3','dq17-3',17)">ご主人への プレゼントですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-3','ご主人への プレゼントですか','fb17-3','dq17-3',17)">ご主人からの プレゼントですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-3','ご主人への プレゼントですか','fb17-3','dq17-3',17)">おとうさまへの プレゼントですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-3','ご主人への プレゼントですか','fb17-3','dq17-3',17)">ご主人への おみやげですか</button>
+          </div><div class="dq-fb" id="fb17-3"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-4"><div class="dq-num">Q4</div>
+          <div class="dq-prompt">れいこ：いいえ、<span class="dq-blank" id="b17-4">고르세요</span> 父(ちち)の たんじょうびなんです。</div>
+          <div class="dq-ko">아니요. 내일 아버지 생신이거든요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-4','あした','fb17-4','dq17-4',17)">あした</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-4','あした','fb17-4','dq17-4',17)">きのう</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-4','あした','fb17-4','dq17-4',17)">きょう</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-4','あした','fb17-4','dq17-4',17)">らいねん</button>
+          </div><div class="dq-fb" id="fb17-4"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-5"><div class="dq-num">Q5</div>
+          <div class="dq-prompt">はるこ：そうですか。おさいふ、<span class="dq-blank" id="b17-5">고르세요</span>。</div>
+          <div class="dq-ko">지갑, 아버님이 좋아하시겠네요.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-5','おとうさまが よろこびますね','fb17-5','dq17-5',17)">おとうさまが よろこびますね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-5','おとうさまが よろこびますね','fb17-5','dq17-5',17)">ごしゅじんが よろこびますね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-5','おとうさまが よろこびますね','fb17-5','dq17-5',17)">おとうさまが かいますね</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-5','おとうさまが よろこびますね','fb17-5','dq17-5',17)">おとうさまが きますね</button>
+          </div><div class="dq-fb" id="fb17-5"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-6"><div class="dq-num">Q6</div>
+          <div class="dq-prompt">はるこ：わたしは すしを かいに <span class="dq-blank" id="b17-6">고르세요</span>。</div>
+          <div class="dq-ko">저는 초밥을 사러 왔습니다.</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-6','きました','fb17-6','dq17-6',17)">きました</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-6','きました','fb17-6','dq17-6',17)">いきます</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-6','きました','fb17-6','dq17-6',17)">います</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-6','きました','fb17-6','dq17-6',17)">かいます</button>
+          </div><div class="dq-fb" id="fb17-6"></div>
+        </div>
+
+        <div class="dq-card" id="dq17-7"><div class="dq-num">Q7</div>
+          <div class="dq-prompt">はるこ：<span class="dq-blank" id="b17-7">고르세요</span>。</div>
+          <div class="dq-ko">아버지 생신에 초밥 어떠세요?</div>
+          <div class="dq-opts">
+            <button class="dq-opt" onclick="fillBlank(this,'b17-7','おとうさまの おたんじょうびに おすし どうですか','fb17-7','dq17-7',17)">おとうさまの おたんじょうびに おすし どうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-7','おとうさまの おたんじょうびに おすし どうですか','fb17-7','dq17-7',17)">おとうさまの おたんじょうびに さいふ どうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-7','おとうさまの おたんじょうびに おすし どうですか','fb17-7','dq17-7',17)">ごしゅじんの おたんじょうびに おすし どうですか</button>
+            <button class="dq-opt" onclick="fillBlank(this,'b17-7','おとうさまの おたんじょうびに おすし どうですか','fb17-7','dq17-7',17)">おとうさまの おたんじょうびに おすし ですか</button>
+          </div><div class="dq-fb" id="fb17-7"></div>
+        </div>
+
+        <div class="dq-result" id="dq-result-17">
+          <div class="dq-result-title" id="dq-result-title-17"></div>
+          <div class="dq-result-score" id="dq-result-score-17"></div>
+          <div class="dq-result-msg" id="dq-result-msg-17"></div>
+          <button class="dq-retry-btn" onclick="resetLesson(17)">다시 풀기 ↺</button>
+        </div>
+      </div>
+
     </div><!-- /대화문 탭 -->
 
   </div><!-- /page -->
